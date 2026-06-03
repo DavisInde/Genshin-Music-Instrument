@@ -612,7 +612,7 @@ function initializeCustomPositionLamp(x, y, z) {
     return light;
 }
 function loadModel() {
-    new (0, _gltfloader.GLTFLoader)().load("../Assets/Models/MilkBar/MilkBar.gltf", function(gltf) {
+    new (0, _gltfloader.GLTFLoader)().load("../static/Assets/Models/MilkBar/MilkBar.gltf", function(gltf) {
         let model = gltf.scene;
         scene.add(model);
         console.log(model);
@@ -627,7 +627,7 @@ function loadModel() {
 function animate() {
     requestAnimationFrame(animate);
     controls.update();
-    mixer.update(clock.getDelta());
+    if (mixer) mixer.update(clock.getDelta());
     renderer.render(scene, camera);
 }
 

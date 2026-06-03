@@ -47,7 +47,7 @@ function loadAudio() { //Download all audio to local storage pro: Play faster co
 function initButtons() {
     notes.forEach((val, i) => {
         buttons[i] = document.getElementById(val) ;
-        buttons[i].addEventListener('click', async function() {
+        buttons[i].addEventListener('click', function() {
             const audio = noteAudio.get(val);
             audio.currentTime = 0; 
             audio.play();
@@ -60,7 +60,7 @@ function setupUserAction() {
     document.body.addEventListener('keydown', e => { //when pressed
         var key = e.key.toLowerCase() ;
         const currentButton = noteMap[key]
-        if (!currentButton) { return }
+        if (currentButton === undefined) { return }
 
         buttons[currentButton].click(); //click the button
         buttons[currentButton].classList.add('activeButton');
@@ -69,7 +69,7 @@ function setupUserAction() {
     document.body.addEventListener('keyup', e => { //when finger lifted from key
         var key = e.key.toLowerCase() ;
         const currentButton = noteMap[key]
-        if (!currentButton) { return }
+        if (currentButton === undefined) { return }
         
         buttons[currentButton].classList.remove('activeButton');
     }) ;

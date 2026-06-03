@@ -88,6 +88,6 @@ function loadModel() {
 function animate() {
     requestAnimationFrame(animate)
     controls.update()
-    mixer.update(clock.getDelta())
+    if (mixer) mixer.update(clock.getDelta())
     renderer.render(scene, camera) 
 }
