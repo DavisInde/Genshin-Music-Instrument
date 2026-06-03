@@ -72,7 +72,7 @@ function initializeCustomPositionLamp(x, y, z) {
 }
 
 function loadModel() {
-    new GLTFLoader().load("../Assets/Models/MilkBar/MilkBar.gltf", function(gltf) {
+    new GLTFLoader().load("../static/Assets/Models/MilkBar/MilkBar.gltf", function(gltf) {
         let model = gltf.scene ;
         scene.add(model) ;
         console.log(model) ;
