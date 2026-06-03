@@ -3,43 +3,43 @@ const notes = ["do", "re", "mi", "fa", "sol", "la", "si", "doAlt", "reAlt", "miA
 var buttons = [] ;
 
 //Initialize key note index pair
-var noteMap = new Map() ;
-noteMap.set('q', 0);
-noteMap.set('w', 1);
-noteMap.set('e', 2);
-noteMap.set('r', 3);
-noteMap.set('t', 4);
-noteMap.set('y', 5);
-noteMap.set('u', 6);
-noteMap.set('a', 7);
-noteMap.set('s', 8);
-noteMap.set('d', 9);
-noteMap.set('f', 10);
-noteMap.set('g', 11);
-noteMap.set('h', 12);
-noteMap.set('j', 13);
-noteMap.set('z', 14);
-noteMap.set('x', 15);
-noteMap.set('c', 16);
-noteMap.set('v', 17);
-noteMap.set('b', 18);
-noteMap.set('n', 19);
-noteMap.set('m', 20);
+var noteMap = 
+{ 'q': 0,
+'w': 1,
+'e': 2,
+'r': 3,
+'t': 4,
+'y': 5,
+'u': 6,
+'a': 7,
+'s': 8,
+'d': 9,
+'f': 10,
+'g': 11,
+'h': 12,
+'j': 13,
+'z': 14,
+'x': 15,
+'c': 16,
+'v': 17,
+'b': 18,
+'n': 19,
+'m': 20
+}
+
+const noteAudio = new Map()
 
 main() ;
 
 function main() {
-    //loadAudio() ;
+    loadAudio() ;
     initButtons() ;
     setupUserAction() ;
 }
 
 function loadAudio() { //Download all audio to local storage pro: Play faster cons: Hambur kuota
     notes.forEach((val) => {
-        localStorage.setItem(
-            val, 
-            new Audio("../Assets/Audio/" + instrumentType + "/" + val + ".mp3")
-        );
+        noteAudio.set(val, new Audio("../static/Assets/Audio/" + instrumentType + "/" + val + ".mp3"))
     }) ;
 }
 
@@ -47,8 +47,10 @@ function loadAudio() { //Download all audio to local storage pro: Play faster co
 function initButtons() {
     notes.forEach((val, i) => {
         buttons[i] = document.getElementById(val) ;
-        buttons[i].addEventListener('click', function(){
-            new Audio("../Assets/Audio/" + instrumentType + "/" + val + ".mp3").play() ;
+        buttons[i].addEventListener('click', async function() {
+            const audio = noteAudio.get(val);
+            audio.currentTime = 0; 
+            audio.play();
         })
     }) ;
 }
@@ -57,20 +59,18 @@ function setupUserAction() {
     //Keyboard events
     document.body.addEventListener('keydown', e => { //when pressed
         var key = e.key.toLowerCase() ;
-        buttons[noteMap.get(key)].click(); //click the button
-        buttons[noteMap.get(key)].classList.add('activeButton');
+        const currentButton = noteMap[key]
+        if (!currentButton) { return }
+
+        buttons[currentButton].click(); //click the button
+        buttons[currentButton].classList.add('activeButton');
     }) ;
 
     document.body.addEventListener('keyup', e => { //when finger lifted from key
         var key = e.key.toLowerCase() ;
-        buttons[noteMap.get(key)].classList.remove('activeButton');
-    }) ;
-    //document.body.addEventListener('unload', deleteLocal())
-}
-
-function deleteLocal() {
-    console.log("test") ;
-    notes.forEach((val) => {
-        localStorage.removeItem(val) ;
+        const currentButton = noteMap[key]
+        if (!currentButton) { return }
+        
+        buttons[currentButton].classList.remove('activeButton');
     }) ;
 }
