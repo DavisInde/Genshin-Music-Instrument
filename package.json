@@ -18,6 +18,6 @@
     "three":"0.157.0"
   },
   "staticFiles": {
-    "staticOutpath": "static"
+    "staticOutpath": "Assets"
   }
 }
